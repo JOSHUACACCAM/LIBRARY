@@ -12,11 +12,11 @@
     // Register
     $app->post('/user/register', function (Request $request, Response $response, array $args) {
 
-        $data = json_decode($request->getBody(), false); // Decode as object
+        $data = json_decode($request->getBody(), false);
         
         // Check if data is an array (multiple users)
         if (!is_array($data)) {
-            $data = [$data]; // Convert single user to an array
+            $data = [$data];
         }
     
         $servername = "localhost";
@@ -24,7 +24,7 @@
         $password = "";
         $dbname = "library";
     
-        $responses = []; // To hold responses for each user
+        $responses = [];
     
         try {
             $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -39,7 +39,6 @@
                     continue;
                 }
     
-                // Check if username already exists
                 $sql = "SELECT userid FROM users WHERE username = :username";
                 $statement = $conn->prepare($sql);
                 $statement->execute(['username' => $uname]);
@@ -49,12 +48,10 @@
                     $responses[] = array("status" => "fail", "username" => $uname, "data" => array("Message" => "Username already taken!"));
                     continue;
                 }
-    
-                // Insert user into database
+
                 $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
                 $statement = $conn->prepare($sql);
-    
-                // Hash the password
+
                 $hashedPassword = password_hash($pass, PASSWORD_DEFAULT);
     
                 $statement->execute([
@@ -66,11 +63,11 @@
             }
     
         } catch (PDOException $e) {
-            $response->getBody()->write(json_encode(array("status" => "fail", "data" => array("Message" => "Registration failed."))));
+            $response->getBody()->write(json_encode(array("status" => "fail", "data" => array("Message" => "Registration failed!"))));
             error_log($e->getMessage());
         }
     
-        $response->getBody()->write(json_encode($responses)); // Return all responses
+        $response->getBody()->write(json_encode($responses)); 
         return $response;
     });    
 
@@ -79,7 +76,7 @@
         $data = json_decode($request->getBody());
         
         $password = $data->password;
-        $uname = $data->username; // Changed from email to username
+        $uname = $data->username; 
 
         $servername = "localhost";
         $dbpassword = ""; 
@@ -150,7 +147,7 @@
 
                 } else {
                     $response->getBody()->write(
-                        json_encode(array("status" => "fail", "data" => array("Message" => "Access Denied. Insufficient permissions.")))
+                        json_encode(array("status" => "fail", "data" => array("Message" => "Access Denied.")))
                     );
                 }
             } else {
@@ -184,13 +181,10 @@
         $key = 'key';
     
         try {
-            // Decode the JWT
             $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
-    
-            // Ensure only admin users can add authors
             if (!isset($decoded->data->access_level) || $decoded->data->access_level !== 'admin') {
                 $response->getBody()->write(
-                    json_encode(array("status" => "fail", "data" => array("Message" => "Access Denied. Only admins can add authors.")))
+                    json_encode(array("status" => "fail", "data" => array("Message" => "Access denied, only admins can add authors.")))
                 );
                 return $response;
             }
@@ -283,7 +277,7 @@
     
             if (!isset($decoded->data->access_level) || $decoded->data->access_level !== 'admin') {
                 $response->getBody()->write(
-                    json_encode(array("status" => "fail", "data" => array("title" => "Access Denied. Only admins can update books.")))
+                    json_encode(array("status" => "fail", "data" => array("title" => "Access denied, only admins can update authors.")))
                 );
                 return $response;
             }
@@ -302,7 +296,7 @@
 
                 if ($userInfo['token'] !== $jwt) {
                     $response->getBody()->write(
-                        json_encode(array("status" => "fail", "data" => array("Message" => "Token is invalid or outdated.")))
+                        json_encode(array("status" => "fail", "data" => array("Message" => "Invalid or Outdated Token.")))
                     );
                     return $response;
                 }
@@ -399,7 +393,7 @@
     
             if (!isset($decoded->data->access_level) || $decoded->data->access_level !== 'admin') {
                 $response->getBody()->write(
-                    json_encode(array("status" => "fail", "data" => array("Message" => "Access Denied. Only admins can update books.")))
+                    json_encode(array("status" => "fail", "data" => array("Message" => "Access denied, only admins can update authors.")))
                 );
                 return $response;
             }
@@ -418,7 +412,7 @@
 
                 if ($userInfo['token'] !== $jwt) {
                     $response->getBody()->write(
-                        json_encode(array("status" => "fail", "data" => array("Message" => "Token is invalid or outdated.")))
+                        json_encode(array("status" => "fail", "data" => array("Message" => "Invalid or Outdated Token.")))
                     );
                     return $response;
                 }
@@ -503,7 +497,7 @@
     
                 if ($userInfo['token'] !== $jwt) {
                     $response->getBody()->write(
-                        json_encode(array("status" => "fail", "data" => array("Message" => "Token is invalid or outdated.")))
+                        json_encode(array("status" => "fail", "data" => array("Message" => "Invalid or Outdated Token.")))
                     );
                     return $response;
                 }
@@ -575,7 +569,7 @@
 
             if (!isset($decoded->data->access_level) || $decoded->data->access_level !== 'admin') {
                 $response->getBody()->write(
-                    json_encode(array("status" => "fail", "data" => array("Message" => "Access Denied. Only admins can update books.")))
+                    json_encode(array("status" => "fail", "data" => array("Message" => "Access denied, only admins can view list of users.")))
                 );
                 return $response;
             }
@@ -594,7 +588,7 @@
 
                 if ($userInfo['token'] !== $jwt) {
                     $response->getBody()->write(
-                        json_encode(array("status" => "fail", "data" => array("Message" => "Token is invalid or outdated.")))
+                        json_encode(array("status" => "fail", "data" => array("Message" => "Invalid or Outdated Token.")))
                     );
                     return $response;
                 }
@@ -649,7 +643,7 @@
                     $statement->execute(['token' => $new_jwt, 'userid' => $userid]);
 
                     $response->getBody()->write(
-                        json_encode(array("status" => "success", "new_token" => $new_jwt, "Message" => "No user account found."))
+                        json_encode(array("status" => "success", "new_token" => $new_jwt, "Message" => "No user accounts found."))
                     );
                 }
 
@@ -683,7 +677,7 @@
 
             if (!isset($decoded->data->access_level) || $decoded->data->access_level !== 'admin') {
                 $response->getBody()->write(
-                    json_encode(array("status" => "fail", "data" => array("title" => "Access Denied. Only admins can update books.")))
+                    json_encode(array("status" => "fail", "data" => array("title" => "Access denied, only admins can delete user.")))
                 );
                 return $response;
             }
@@ -702,7 +696,7 @@
 
                 if ($userInfo['token'] !== $jwt) {
                     $response->getBody()->write(
-                        json_encode(array("status" => "fail", "data" => array("Message" => "Token is invalid or outdated.")))
+                        json_encode(array("status" => "fail", "data" => array("Message" => "Invalid or Outdated Token.")))
                     );
                     return $response;
                 }
@@ -715,7 +709,7 @@
                 if ($existing_user) {
                     if ($existing_user['access_level'] === 'admin' && !empty($existing_user['access_level'])) {
                         $response->getBody()->write(
-                            json_encode(array("status" => "fail", "data" => array("Message" => "Admin accounts cannot be deleted.")))
+                            json_encode(array("status" => "fail", "data" => array("Message" => "Admin accounts can't be deleted.")))
                         );
                         return $response->withStatus(403);
                     } else {
@@ -788,7 +782,7 @@
     
             if (!isset($decoded->data->access_level) || $decoded->data->access_level !== 'admin') {
                 $response->getBody()->write(
-                    json_encode(array("status" => "fail", "data" => array("Message" => "Access Denied. Only admins can add books.")))
+                    json_encode(array("status" => "fail", "data" => array("Message" => "Access denied, only admins can add books.")))
                 );
                 return $response;
             }
@@ -807,7 +801,7 @@
     
                 if ($userInfo['token'] !== $jwt) {
                     $response->getBody()->write(
-                        json_encode(array("status" => "fail", "data" => array("Message" => "Token is invalid or outdated.")))
+                        json_encode(array("status" => "fail", "data" => array("Message" => "Invalid or Outdated Token.")))
                     );
                     return $response;
                 }
@@ -919,7 +913,7 @@
     
             if (!isset($decoded->data->access_level) || $decoded->data->access_level !== 'admin') {
                 $response->getBody()->write(
-                    json_encode(array("status" => "fail", "data" => array("Message" => "Access Denied, only admins can update books.")))
+                    json_encode(array("status" => "fail", "data" => array("Message" => "Access denied, only admins can update books.")))
                 );
                 return $response;
             }
@@ -938,7 +932,7 @@
 
                 if ($userInfo['token'] !== $jwt) {
                     $response->getBody()->write(
-                        json_encode(array("status" => "fail", "data" => array("Message" => "Token is invalid or outdated.")))
+                        json_encode(array("status" => "fail", "data" => array("Message" => "Invalid or Outdated Token.")))
                     );
                     return $response;
                 }
@@ -1063,7 +1057,7 @@
     
             if (!isset($decoded->data->access_level) || $decoded->data->access_level !== 'admin') {
                 $response->getBody()->write(
-                    json_encode(array("status" => "fail", "data" => array("Message" => "Access Denied. Only admins can update books.")))
+                    json_encode(array("status" => "fail", "data" => array("Message" => "Access denied, only admins can delete books.")))
                 );
                 return $response;
             }
@@ -1082,7 +1076,7 @@
 
                 if ($userInfo['token'] !== $jwt) {
                     $response->getBody()->write(
-                        json_encode(array("status" => "fail", "data" => array("Message" => "Token is invalid or outdated.")))
+                        json_encode(array("status" => "fail", "data" => array("Message" => "Invalid or Outdated Token.")))
                     );
                     return $response;
                 }
@@ -1167,7 +1161,7 @@
 
                 if ($userInfo['token'] !== $jwt) {
                     $response->getBody()->write(
-                        json_encode(array("status" => "fail", "data" => array("Message" => "Token is invalid or outdated.")))
+                        json_encode(array("status" => "fail", "data" => array("Message" => "Invalid or Outdated Token.")))
                     );
                     return $response;
                 }
@@ -1263,7 +1257,7 @@
 
                 if ($userInfo['token'] !== $jwt) {
                     $response->getBody()->write(
-                        json_encode(array("status" => "fail", "data" => array("Message" => "Token is invalid or outdated.")))
+                        json_encode(array("status" => "fail", "data" => array("Message" => "Invalid or Outdated Token.")))
                     );
                     return $response;
                 }
@@ -1365,7 +1359,7 @@
 
                 if ($userInfo['token'] !== $jwt) {
                     $response->getBody()->write(
-                        json_encode(array("status" => "fail", "data" => array("Message" => "Token is invalid or outdated.")))
+                        json_encode(array("status" => "fail", "data" => array("Message" => "Invalid or Outdated Token.")))
                     );
                     return $response;
                 }
@@ -1468,7 +1462,7 @@
 
                 if ($userInfo['token'] !== $jwt) {
                     $response->getBody()->write(
-                        json_encode(array("status" => "fail", "data" => array("Message" => "Token is invalid or outdated.")))
+                        json_encode(array("status" => "fail", "data" => array("Message" => "Invalid or Outdated Token.")))
                     );
                     return $response;
                 }

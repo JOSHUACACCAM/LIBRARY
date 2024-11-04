@@ -1,4 +1,5 @@
- # Library API Documentation
+# Library API Documentation
+---
 
 ## Introduction
 
@@ -14,8 +15,7 @@ This API uses **JSON Web Tokens (JWT)** for secure authentication. A valid JWT t
 The API returns consistent error codes and response formats for different error scenarios. Error responses are provided in JSON format with a `status` and `data` field, where `data` contains the error message.
 
 ---
-
- # Endpoints
+# Endpoints
 
 ## Endpoint 1: Register User
 
@@ -79,24 +79,24 @@ The API returns consistent error codes and response formats for different error 
       {
           "status": "fail",
           "data": {
-              "Message": "Registration failed."
+              "Message": "Registration failed!"
           }
       }
       ```
 
 ---
 
-## Endpoint 2: User Login
+## Endpoint 2: Login
 
 - **URL**: `/users/login`
 - **Method**: `POST`
-- **Description**: Authenticates a user by verifying their username and password. If successful, generates a JSON Web Token (JWT).
+- **Description**: Authenticates user by verifying their username and password. If successful, a JSON Web Token (JWT) will be given.
 
 #### Request Parameters
 | Parameter | Type   | Description                 | Required | Example    |
 |-----------|--------|-----------------------------|----------|------------|
-| username  | string | The user's username         | Yes      | `joshu`    |
-| password  | string | The user's account password | Yes      | `opengate` |
+| `username`  | string | The user's username         | Yes      | `joshu`    |
+| `password`  | string | The user's account password | Yes      | `opengate` |
 
 ### Example Request
 ```json
@@ -117,7 +117,7 @@ The API returns consistent error codes and response formats for different error 
         "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"
     }
     ```
-  - **token**: A JWT token generated for the user, valid for 1 hour for admin users and regular users.
+  - **token**: A JWT token generated for the user, valid for 1 hour for admin users and users.
 
 - **Error Responses**:
   - **Invalid Credentials**
@@ -154,8 +154,8 @@ The API returns consistent error codes and response formats for different error 
 ### Request Parameters
 | Parameter | Type   | Required | Description                          | Example                                                     |
 |-----------|--------|----------|--------------------------------------|-------------------------------------------------------------|
-| authors   | array  | Yes      | List of author names to add.         | `["New Author", "Another Author"]`                          |
-| token     | string | Yes      | A valid JWT token for authentication. | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"` |
+| `authors`   | array  | Yes      | List of author names to add.         | `["New Author", "Another Author"]`                          |
+| `token`     | string | Yes      | A valid JWT token for authentication. | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"` |
 
 ### Example Request
 ```json
@@ -187,76 +187,7 @@ The API returns consistent error codes and response formats for different error 
     "new_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"
     }
     ```
-- **Error Responses**:
-  - **Access Denied**:
-    - **Status Code**: `403`
-    - **Error Message**:
-      ```json
-      {
-          "status": "fail",
-          "data": {
-              "Message": "Access denied, only admins can add books."
-          }
-      }
-      ```
-  - **Invalid or Expired Token**:
-    - **Status Code**: `401`
-    - **Error Message**:
-      ```json
-      {
-          "status": "fail",
-          "data": {
-              "Message": "Invalid or Outdated Token."
-          }
-      }
-      ```
-  - **Database Error** (e.g., issues with inserting records):
-    - **Status Code**: `500`
-    - **Error Message**:
-      ```json
-      {
-          "status": "fail",
-          "data": {
-              "Message": "Database error message here."
-          }
-      }
-      ```
-
----
-
-## Endpoint 4: Update Author API (Admin)
-
-- **URL**: `/update/authors`
-- **Method**: `POST`
-- **Description**: Updates the details of an author in the database. This action is restricted to users with admin access.
-
-#### Request Parameters
-| Parameter    | Type   | Required | Description                                       | Example                              |
-|--------------|--------|----------|---------------------------------------------------|--------------------------------------|
-| authorid     | string | Yes      | The ID of the author to update.                   | `"1"`                                |
-| authorname   | string | No       | The new name of the author (if applicable).       | `"Joshua (Updated Author Name)"`     |
-| token        | string | Yes      | A valid JWT token for authentication.             | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"`     |
-
-### Example Request
-```json
-{
-    "authorid": "1",
-    "authorname": "Joshua (Updated Autohr Name)",
-    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"
-}
-```
-
-#### Responses
-
-- **Success Response**:
-  - **Status Code**: `200`
-  - **Response Body**:
-    ```json
-    {
-        "status": "success",
-        "new_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"
-    }
-    ```
+    
 - **Error Responses**:
   - **Access Denied**:
     - **Status Code**: `403`
@@ -291,6 +222,77 @@ The API returns consistent error codes and response formats for different error 
           }
       }
       ```
+
+---
+
+## Endpoint 4: Update Author API (Admin)
+
+- **URL**: `/update/authors`
+- **Method**: `POST`
+- **Description**: Updates the details of an author. This action is restricted to users with admin access level.
+
+#### Request Parameters
+| Parameter    | Type   | Required | Description                                       | Example                              |
+|--------------|--------|----------|---------------------------------------------------|--------------------------------------|
+| `authorid`     | string | Yes      | The ID of the author to update.                   | `"1"`                                |
+| `authorname`   | string | No       | The new name of the author (if applicable).       | `"Joshua (Updated Author Name)"`     |
+| `token`        | string | Yes      | A valid JWT token for authentication.             | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"`     |
+
+### Example Request
+```json
+{
+    "authorid": "1",
+    "authorname": "Joshua (Updated Autohr Name)",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"
+}
+```
+
+#### Responses
+
+- **Success Response**:
+  - **Status Code**: `200`
+  - **Response Body**:
+    ```json
+    {
+        "status": "success",
+        "new_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"
+    }
+    ```
+    
+- **Error Responses**:
+  - **Access Denied**:
+    - **Status Code**: `403`
+    - **Error Message**:
+      ```json
+      {
+          "status": "fail",
+          "data": {
+              "Message": "Access denied, only admins can update authors."
+          }
+      }
+      ```
+  - **Invalid or Expired Token**:
+    - **Status Code**: `401`
+    - **Error Message**:
+      ```json
+      {
+          "status": "fail",
+          "data": {
+              "Message": "Invalid or Outdated Token."
+          }
+      }
+      ```
+  - **Database Error**:
+    - **Status Code**: `500`
+    - **Error Message**:
+      ```json
+      {
+          "status": "fail",
+          "data": {
+              "Message": "Database error message here."
+          }
+      }
+      ```
       
 ---
 
@@ -298,7 +300,7 @@ The API returns consistent error codes and response formats for different error 
 
 - **URL**: `/delete/authors`
 - **Method**: `DELETE`
-- **Description**: Allows an admin user to delete an author from the database. This action requires admin privileges.
+- **Description**: Allows an admin user to delete an author from the database.
 
 ### Request Parameters
 | Parameter      | Type   | Required | Description                                       | Example                              |
@@ -335,7 +337,7 @@ The API returns consistent error codes and response formats for different error 
       {
           "status": "fail",
           "data": {
-              "Message": "Access denied, only admins can delete authorss."
+              "Message": "Access denied, only admins can delete authors."
           }
       }
       ```
@@ -378,12 +380,12 @@ The API returns consistent error codes and response formats for different error 
 
 - **URL**: `/display/authors`
 - **Method**: `GET`
-- **Description**: Retrieves a list of all authors from the database. Requires a valid JWT token for authentication.
+- **Description**: Retrieves a list of all authors from the database.
 
 ### Request Parameters
 | Parameter | Type   | Required | Description                           | Example                              |
 |-----------|--------|----------|---------------------------------------|--------------------------------------|
-| token     | string | Yes      | A valid JWT token for authentication. | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"` |
+| `token`     | string | Yes      | A valid JWT token for authentication. | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"` |
 
 ### Example Request
 ```json
@@ -413,7 +415,6 @@ The API returns consistent error codes and response formats for different error 
     "new_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"
     }
     ```
-- **new_token**: A new JWT token is returned if the previous token is close to expiring.
 
 - **Error Responses**:
   - **Token Invalid or Outdated**:
@@ -466,12 +467,12 @@ The API returns consistent error codes and response formats for different error 
 
 - **URL**: `/displayall/users`
 - **Method**: `GET`
-- **Description**: Allows admins to retrieve a list of all users in the library system. Requires a valid JWT token with admin access level.
+- **Description**: Allows admins to retrieve a list of all users in the library system.
 
 ### Request Parameters
 | Parameter | Type   | Required | Description                           | Example                              |
 |-----------|--------|----------|---------------------------------------|--------------------------------------|
-| token     | string | Yes      | A valid JWT token for authentication. | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"` |
+| 'token'     | string | Yes      | A valid JWT token for authentication. | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"` |
 
 ### Example Request
 ```json
@@ -509,6 +510,7 @@ The API returns consistent error codes and response formats for different error 
            "Message": "No user account found."
        }
        ```
+       
 - **Error Responses**:
   - **Access Denied**:
     - **Status Code**: `403`
@@ -517,7 +519,7 @@ The API returns consistent error codes and response formats for different error 
       {
           "status": "fail",
           "data": {
-              "Message": "Access denied, only admins can add books."
+              "Message": "Access denied, only admins can view list of users."
           }
       }
       ```
@@ -534,7 +536,7 @@ The API returns consistent error codes and response formats for different error 
       ```
 
 
-  - **Database Error** (e.g., issues with inserting records):
+  - **Database Error**:
     - **Status Code**: `500`
     - **Error Message**:
       ```json
@@ -568,14 +570,14 @@ The API returns consistent error codes and response formats for different error 
 ### Request Parameters
 | Parameter | Type   | Required | Description                             | Example                               |
 |-----------|--------|----------|-----------------------------------------|---------------------------------------|
-| token     | string | Yes      | A valid JWT token for authentication.   | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."` |
-| userid    | int    | Yes      | ID of the user to be deleted.           | `102`                                 |
+| `token`     | string | Yes      | A valid JWT token for authentication.   | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"` |
+| `userid`    | int    | Yes      | ID of the user to be deleted.           | `102`                                 |
 
 ### Example Request
 ```json
 {
-    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA",
-    "userid": 102
+    "userid": 102,
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA" 
 }
 ```
 
@@ -587,7 +589,7 @@ The API returns consistent error codes and response formats for different error 
     ```json
     {
     "status": "success",
-    "new_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+    "new_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA" 
     }
     ```
  
@@ -621,7 +623,7 @@ The API returns consistent error codes and response formats for different error 
        {
            "status": "fail",
            "data": {
-               "Message": "Admin accounts cannot be deleted."
+               "Message": "Admin accounts can't be deleted."
            }
        }
       ```
@@ -661,7 +663,7 @@ The API returns consistent error codes and response formats for different error 
 
 ---
 
-## Endpoint 3: Add Book (Admin)
+## Endpoint 9: Add Book (Admin)
 
 - **URL**: `/add/books`
 - **Method**: `POST`
@@ -670,8 +672,8 @@ The API returns consistent error codes and response formats for different error 
 #### Request Parameters
 | Parameter | Type   | Description                                     | Required | Example                     |
 |-----------|--------|-------------------------------------------------|----------|-----------------------------|
-| token     | string | A valid JWT token for admin authorization       | Yes      | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"`     |
-| books     | array  | Array of book objects, each containing details  | Yes      | See example below           |
+| `token`     | string | A valid JWT token for admin authorization       | Yes      | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"`     |
+| `books`     | array  | Array of book objects, each containing details  | Yes      | See example below.           |
 
 Each book object in the `books` array should contain the following fields:
 
@@ -687,14 +689,14 @@ Each book object in the `books` array should contain the following fields:
     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA",
     "books": [
         {
-            "title": "Sample Book Title 1",
+            "title": "Isang Kaibigan",
             "genre": "Science Fiction",
-            "author": "Author Name 1"
+            "author": "Hey-hey"
         },
         {
-            "title": "Sample Book Title 2",
-            "genre": "Fantasy",
-            "author": "Author Name 2"
+            "title": "Wonder Pets",
+            "genre": "Fiction",
+            "author": "Rasta Man"
         }
     ]
 }
@@ -710,7 +712,6 @@ Each book object in the `books` array should contain the following fields:
         "new_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"
     }
     ```
-  - **new_token**: A new JWT token is returned if the previous token is close to expiring.
 
 - **Error Responses**:
   - **Access Denied**:
@@ -735,7 +736,7 @@ Each book object in the `books` array should contain the following fields:
           }
       }
       ```
-  - **Database Error** (e.g., issues with inserting records):
+  - **Database Error**:
     - **Status Code**: `500`
     - **Error Message**:
       ```json
@@ -760,29 +761,29 @@ Each book object in the `books` array should contain the following fields:
 
 ---
 
-### Endpoint 4: Update Book (Admin)
+### Endpoint 10: Update Book (Admin)
 
 - **URL**: `/update/books`
 - **Method**: `POST`
-- **Description**: Allows admins to update the details of a specific book in the library. Requires a valid JWT token for authentication.
+- **Description**: Allows admins to update the details of a specific book in the library.
 
 #### Request Parameters
 | Parameter  | Type   | Description                                   | Required | Example                     |
 |------------|--------|-----------------------------------------------|----------|-----------------------------|
-| token      | string | A valid JWT token for admin authorization     | Yes      | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"`     |
-| bookCode   | string | The unique identifier for the book to update  | Yes      | `"915AG"`                   |
-| title      | string | The new title of the book                     | No       | `"Updated Book Title"`      |
-| genre      | string | The new genre of the book                     | No       | `"Mystery"`                 |
-| author     | string | The new author's name                         | No       | `"New Author Name"`         |
+| `token`      | string | A valid JWT token for admin authorization     | Yes      | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"`     |
+| `bookCode`   | string | The unique identifier for the book to update  | Yes      | `"915AG"`                   |
+| `title`      | string | The new title of the book                     | No       | `"JakJak Crazy"`      |
+| `genre`      | string | The new genre of the book                     | No       | `"Mystery"`                 |
+| `author`     | string | The new author's name                         | No       | `"Hilda XD"`         |
 
 #### Example Request Body
 ```json
 {
     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA",
-    "bookCode": "12345",
-    "title": "Updated Book Title",
+    "bookCode": "915AG",
+    "title": "JakJak Crazy",
     "genre": "Mystery",
-    "author": "New Author Name"
+    "author": "Hilda  XD"
 }
 ```
 
@@ -797,7 +798,6 @@ Each book object in the `books` array should contain the following fields:
         "new_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"
     }
     ```
-  - **new_token**: A new JWT token is returned if the previous token is close to expiring.
 
 - **Error Responses**:
   - **Access Denied**:
@@ -807,7 +807,7 @@ Each book object in the `books` array should contain the following fields:
       {
           "status": "fail",
           "data": {
-              "Message": "Access denied, only admins can add books."
+              "Message": "Access denied, only admins can update books."
           }
       }
       ```
@@ -869,7 +869,7 @@ Each book object in the `books` array should contain the following fields:
       
 ---
 
-### Endpoint 4: Delete Book (Admin)
+### Endpoint 11: Delete Book (Admin)
 
 - **URL**: `/delete/books`
 - **Method**: `DELETE`
@@ -900,7 +900,6 @@ Each book object in the `books` array should contain the following fields:
         "new_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMDM4NTAsImV4cCI6MTczMDMwNzQ1MCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.cHV3NFEarnoRpLqfmSgkMohh42rQ4tZ42bzRKKcf6yA"
     }
     ```
-  - **new_token**: A new JWT token is returned if the previous token is close to expiring.
 
 - **Error Responses**:
   - **Access Denied**:
@@ -910,7 +909,7 @@ Each book object in the `books` array should contain the following fields:
       {
           "status": "fail",
           "data": {
-              "Message": "Access denied, only admins can add books."
+              "Message": "Access denied, only admins can delete books."
           }
       }
       ```
@@ -961,16 +960,16 @@ Each book object in the `books` array should contain the following fields:
 
 ---
 
-### Display All Books API
+### Endpoint 12: Display All Books API
 
 - **URL**: `/displayall/books`
 - **Method**: `GET`
-- **Description**: This endpoint retrieves all books along with their associated authors from the library database. It requires a valid JWT token for access.
+- **Description**: This endpoint retrieves all books along with their associated authors from the library database.
 
 #### Request Parameters
 | Parameter | Type   | Description                               | Required | Example                   |
 |-----------|--------|-------------------------------------------|----------|---------------------------|
-| token     | string | A valid JWT token for user authorization  | Yes      | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMTI2MDQsImV4cCI6MTczMDMxNjIwNCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.qvk-3h9KOakIjNvArKpYh1feoGaoTbICA-oyhOOzo4U"`   |
+| `token`     | string | A valid JWT token for user authorization  | Yes      | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMTI2MDQsImV4cCI6MTczMDMxNjIwNCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.qvk-3h9KOakIjNvArKpYh1feoGaoTbICA-oyhOOzo4U"`   |
 
 #### Example Request Body
 ```json
@@ -1008,8 +1007,6 @@ Each book object in the `books` array should contain the following fields:
         ]
     }
     ```
-- **new_token**: A new JWT token is returned if the previous token is close to expiring.
-
 - **Response Body** (if no books are found):
     ```json
     {
@@ -1030,7 +1027,6 @@ Each book object in the `books` array should contain the following fields:
             }
         }
         ```
-
 - **Database Error**:
     - **Status Code**: `500`
     - **Error Message**:
@@ -1042,7 +1038,6 @@ Each book object in the `books` array should contain the following fields:
             }
         }
         ```
-
 - **General Exception**:
     - **Status Code**: `500`
     - **Error Message**:
@@ -1057,22 +1052,22 @@ Each book object in the `books` array should contain the following fields:
 
 ---
 
-### Display Books by Author API
+### Endpoint 13: Display Books by Author API
 - **URL**: `/display/authorsbooks`
 - **Method**: `GET`
-- **Description**: This endpoint retrieves all books written by a specified author. It requires a valid JWT token for access.
+- **Description**: This endpoint retrieves all books written by a specified author.
 
 #### Request Parameters
 | Parameter   | Type   | Description                               | Required | Example                   |
 |-------------|--------|-------------------------------------------|----------|---------------------------|
-| token       | string | A valid JWT token for user authorization  | Yes      | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMTI2MDQsImV4cCI6MTczMDMxNjIwNCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.qvk-3h9KOakIjNvArKpYh1feoGaoTbICA-oyhOOzo4U"`   |
-| authorname  | string | The name of the author whose books to retrieve | Yes  | `"Author1"`           |
+| `token`       | string | A valid JWT token for user authorization  | Yes      | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMTI2MDQsImV4cCI6MTczMDMxNjIwNCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.qvk-3h9KOakIjNvArKpYh1feoGaoTbICA-oyhOOzo4U"`   |
+| `authorname`  | string | The name of the author whose books to retrieve | Yes  | `"Uncle Fred"`           |
 
 #### Example Request Body
 ```json
 {
     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMTI2MDQsImV4cCI6MTczMDMxNjIwNCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.qvk-3h9KOakIjNvArKpYh1feoGaoTbICA-oyhOOzo4U",
-    "authorname": "Author1"
+    "authorname": "Uncle Fred"
 }
 ```
 
@@ -1093,7 +1088,7 @@ Each book object in the `books` array should contain the following fields:
                 "genre": "Fiction",
                 "bookCode": "BK001",
                 "authorid": "1",
-                "authorname": "Author1"
+                "authorname": "Uncle Fred"
             },
             {
                 "bookid": "2",
@@ -1101,13 +1096,11 @@ Each book object in the `books` array should contain the following fields:
                 "genre": "Non-Fiction",
                 "bookCode": "BK002",
                 "authorid": "1",
-                "authorname": "Author1"
+                "authorname": "Uncle Fred"
             }
         ]
     }
     ```
-    **new_token**: A new JWT token is returned if the previous token is close to expiring.
-
 - **Response Body** (if no books are found):
     ```json
     {
@@ -1130,7 +1123,6 @@ Each book object in the `books` array should contain the following fields:
             }
         }
         ```
-
 - **Database Error**:
     - **Status Code**: `500`
     - **Error Message**:
@@ -1142,7 +1134,6 @@ Each book object in the `books` array should contain the following fields:
             }
         }
         ```
-
 - **General Exception**:
     - **Status Code**: `500`
     - **Error Message**:
@@ -1157,20 +1148,19 @@ Each book object in the `books` array should contain the following fields:
 
 ---
 
-### Display Books by Title API
+### Endpoint 14: Display Books by Title API
 
 - **URL**: `/display/titlebooks`
 - **Method**: `GET`
-- **Description**: Displays a list of books filtered by title if the genre exists in the database. It requires a valid JWT token for access.
-
+- **Description**: Displays a list of books filtered by title if the genre exists in the database.
 #### Endpoint
 `GET /display/titlebooks`
 
 #### Request Parameters
 | Parameter  | Type   | Description                                | Required | Example                  |
 |------------|--------|--------------------------------------------|----------|--------------------------|
-| token      | string | A valid JWT token for user authorization   | Yes      | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMTI2MDQsImV4cCI6MTczMDMxNjIwNCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.qvk-3h9KOakIjNvArKpYh1feoGaoTbICA-oyhOOzo4U"`  |
-| booktitle  | string | The title of the book to search for        | Yes      | `"Isang Kaibigan"`    |
+| `token`      | string | A valid JWT token for user authorization   | Yes      | `"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGlicmFyeS5vcmciLCJhdWQiOiJodHRwOi8vbGlicmFyeS5jb20iLCJpYXQiOjE3MzAzMTI2MDQsImV4cCI6MTczMDMxNjIwNCwiZGF0YSI6eyJ1c2VyaWQiOjEwOSwibmFtZSI6InNhcmxlbiIsImFjY2Vzc19sZXZlbCI6ImFkbWluIn19.qvk-3h9KOakIjNvArKpYh1feoGaoTbICA-oyhOOzo4U"`  |
+| `booktitle`  | string | The title of the book to search for        | Yes      | `"Isang Kaibigan"`    |
 
 #### Example Request Body
 ```json
@@ -1185,7 +1175,7 @@ Each book object in the `books` array should contain the following fields:
 - **Success Response**:
 - **Status Code**: `200`
 
-- **Response Body** (if books are found):
+- **Response Body**:
     ```json
     {
         "status": "success",
@@ -1197,13 +1187,11 @@ Each book object in the `books` array should contain the following fields:
                 "genre": "Fiction",
                 "bookCode": "BK001",
                 "authorid": "1",
-                "authorname": "Author Name"
+                "authorname": "Aras Etretud"
             }
         ]
     }
     ```
-    **new_token**: A new JWT token is returned if the previous token is close to expiring.
-
 - **Response Body** (if no books are found):
     ```json
     {
@@ -1226,7 +1214,6 @@ Each book object in the `books` array should contain the following fields:
             }
         }
         ```
-
 - **Database Error**:
     - **Status Code**: `500`
     - **Error Message**:
@@ -1238,7 +1225,6 @@ Each book object in the `books` array should contain the following fields:
             }
         }
         ```
-
 - **General Exception**:
     - **Status Code**: `500`
     - **Error Message**:
@@ -1253,7 +1239,8 @@ Each book object in the `books` array should contain the following fields:
 
 ---
         
-### Endpoint 3: Display Books by Genre
+### Endpoint 15: Display Books by Genre API
+
 - **URL**: `/display/genrebooks`
 - **Method**: `GET`
 - **Description**: Displays a list of books filtered by genre if the genre exists in the database.
@@ -1277,7 +1264,7 @@ Each book object in the `books` array should contain the following fields:
 - **Success Response**:
 - **Status Code**: `200 OK`
 
-- **Response Body** (if books are found):
+- **Response Body**:
 
 ```json
 {
@@ -1286,19 +1273,19 @@ Each book object in the `books` array should contain the following fields:
     "data": [
         {
             "bookid": "1",
-            "title": "Sample Book Title",
+            "title": "JakJak Crazy",
             "genre": "Fiction",
             "bookCode": "BK001",
             "authorid": "1",
-            "authorname": "Author Name"
+            "authorname": "Uncle Fred"
         },
         {
             "bookid": "2",
-            "title": "Another Book Title",
+            "title": "isang Kaibigan",
             "genre": "Fiction",
             "bookCode": "BK002",
             "authorid": "2",
-            "authorname": "Another Author"
+            "authorname": "Aras Etretud"
         }
     ]
 }
@@ -1317,7 +1304,6 @@ Each book object in the `books` array should contain the following fields:
         }
     }
     ```
-
 - **Database Error**:
     - **Status Code**: `500 Internal Server Error`
     - **Error Message**:
@@ -1330,7 +1316,6 @@ Each book object in the `books` array should contain the following fields:
         }
     }
     ```
-
 - **General Exception**:
     - **Status Code**: `500 Internal Server Error`
     - **Error Message**:
@@ -1344,6 +1329,10 @@ Each book object in the `books` array should contain the following fields:
     }
     ```
 
-### Notes
+---
+
+### Take Note
 - **Token Management**: A new JWT token is returned in the response if the previous token is close to expiration. The updated token is also stored in the database for future requests.
 - **Database**: Uses a MySQL database to fetch book details, and verifies the user's token for security purposes.
+---
+### Caccam, Joshua Q. Info Tech 4C

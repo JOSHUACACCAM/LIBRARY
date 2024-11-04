@@ -29,12 +29,12 @@ CREATE TABLE `authors` (
 /*Data for the table `authors` */
 
 insert  into `authors`(`authorid`,`authorname`) values 
-(316,'Charlyn'),
-(317,'Charlyn Nudas'),
+(316,'joshua'),
+(317,'Joshua Caccam'),
 (318,'Author Three'),
 (319,'Author Four'),
 (320,'Author Five'),
-(321,'cha'),
+(321,'joshu'),
 (322,'Author 1'),
 (323,'Author 2'),
 (324,'Author 3'),
