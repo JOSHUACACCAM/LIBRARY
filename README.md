@@ -1,10 +1,6 @@
 # Library API Documentation
 ---
 
-fghosahdgihail.sdng
-agfoihas;dighoias
-asdgiuyaisudgfhuikasd
-
 ## Introduction
 
 ### Overview
