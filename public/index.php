@@ -130,7 +130,7 @@
                         'iss' => 'http://library.org',
                         'aud' => 'http://library.com',
                         'iat' => $expire,
-                        'exp' => $expire + 7200,
+                        'exp' => $expire + 3600,
                         'data' => array(
                             'userid' => $user['userid'], 
                             "name" => $user['username'],
@@ -558,6 +558,112 @@
     });    
 
     //Users API
+
+    //Display all Users (Admin)
+    $app->get("/displayall/users", function (Request $request, Response $response, array $args) {
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "library";
+
+        $key ='key';
+        $data=json_decode($request->getBody());
+        $jwt=$data->token;
+
+        try {
+            $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
+
+            if (!isset($decoded->data->access_level) || $decoded->data->access_level !== 'admin') {
+                $response->getBody()->write(
+                    json_encode(array("status" => "fail", "data" => array("Message" => "Access Denied. Only admins can update books.")))
+                );
+                return $response;
+            }
+
+            try {
+                $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                $userid = $decoded->data->userid;
+                $access_level = $decoded->data->access_level;
+
+                $sql = "SELECT username, password, token FROM users WHERE userid = :userid";
+                $statement = $conn->prepare($sql);
+                $statement->execute(['userid' => $userid]);
+                $userInfo = $statement->fetch(PDO::FETCH_ASSOC);
+
+                if ($userInfo['token'] !== $jwt) {
+                    $response->getBody()->write(
+                        json_encode(array("status" => "fail", "data" => array("Message" => "Token is invalid or outdated.")))
+                    );
+                    return $response;
+                }
+
+                $sql = "SELECT username, email, created_at FROM users";
+                $statement = $conn->query($sql);
+                $usersCount = $statement->rowCount();
+                $displayUsers = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                $key = 'key';
+                $expire = time();
+
+                if ($usersCount > 0) {
+                    $payload = [
+                        'iss' => 'http://library.org',
+                        'aud' => 'http://library.com',
+                        'iat' => $expire,
+                        'exp' => $expire + 3600,
+                        'data' => array(
+                            'userid' => $userid, 
+                            "name" => $username,
+                            "access_level" => $access_level
+                        )
+                    ];
+
+                    $new_jwt = JWT::encode($payload, $key, 'HS256');
+
+                    $sql = "UPDATE users SET token = :token  WHERE userid = :userid";
+                    $statement = $conn->prepare($sql);
+                    $statement->execute(['token' => $new_jwt, 'userid' => $userid]);
+
+                    $response->getBody()->write(
+                        json_encode(array("status" => "success", "new_token" => $new_jwt, "data" => $displayUsers))
+                    );
+                } else {
+                    $payload = [
+                        'iss' => 'http://library.org',
+                        'aud' => 'http://library.com',
+                        'iat' => $expire,
+                        'exp' => $expire + 3600,
+                        'data' => array(
+                            'userid' => $userid, 
+                            "name" => $username,
+                            "access_level" => $access_level
+                        )
+                    ];
+
+                    $new_jwt = JWT::encode($payload, $key, 'HS256');
+
+                    $sql = "UPDATE users SET token = :token  WHERE userid = :userid";
+                    $statement = $conn->prepare($sql);
+                    $statement->execute(['token' => $new_jwt, 'userid' => $userid]);
+
+                    $response->getBody()->write(
+                        json_encode(array("status" => "success", "new_token" => $new_jwt, "Message" => "No user account found."))
+                    );
+                }
+
+            } catch (PDOException $e) {
+                $response->getBody()->write(json_encode(array("status" => "fail", "data" => array("Message" => $e->getMessage()))));
+            }
+        } catch (Exception $e) {
+            $response->getBody()->write(json_encode(array("status" => "fail", "data" => array("Message" => $e->getMessage()))));
+        }
+
+        $conn = null;
+        return $response;
+    });
+
     //Delete User(Admin)
     $app->delete("/delete/users", function(Request $request, Response $response, array $args) {
         $data = json_decode($request->getBody());
@@ -661,113 +767,9 @@
         return $response;
     });
 
-    //Display all Users (Admin)
-    $app->get("/displayall/users", function (Request $request, Response $response, array $args) {
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "library";
-
-        $key ='key';
-        $data=json_decode($request->getBody());
-        $jwt=$data->token;
-
-        try {
-            $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
     
-            if (!isset($decoded->data->access_level) || $decoded->data->access_level !== 'admin') {
-                $response->getBody()->write(
-                    json_encode(array("status" => "fail", "data" => array("Message" => "Access Denied. Only admins can update books.")))
-                );
-                return $response;
-            }
-    
-            try {
-                $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                $userid = $decoded->data->userid;
-                $access_level = $decoded->data->access_level;
-
-                $sql = "SELECT username, password, token FROM users WHERE userid = :userid";
-                $statement = $conn->prepare($sql);
-                $statement->execute(['userid' => $userid]);
-                $userInfo = $statement->fetch(PDO::FETCH_ASSOC);
-
-                if ($userInfo['token'] !== $jwt) {
-                    $response->getBody()->write(
-                        json_encode(array("status" => "fail", "data" => array("Message" => "Token is invalid or outdated.")))
-                    );
-                    return $response;
-                }
-    
-                $sql = "SELECT username, email, created_at FROM users";
-                $statement = $conn->query($sql);
-                $usersCount = $statement->rowCount();
-                $displayUsers = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-                $key = 'key';
-                $expire = time();
-
-                if ($usersCount > 0) {
-                    $payload = [
-                        'iss' => 'http://library.org',
-                        'aud' => 'http://library.com',
-                        'iat' => $expire,
-                        'exp' => $expire + 3600,
-                        'data' => array(
-                            'userid' => $userid, 
-                            "name" => $username,
-                            "access_level" => $access_level
-                        )
-                    ];
-
-                    $new_jwt = JWT::encode($payload, $key, 'HS256');
-
-                    $sql = "UPDATE users SET token = :token  WHERE userid = :userid";
-                    $statement = $conn->prepare($sql);
-                    $statement->execute(['token' => $new_jwt, 'userid' => $userid]);
-
-                    $response->getBody()->write(
-                        json_encode(array("status" => "success", "new_token" => $new_jwt, "data" => $displayUsers))
-                    );
-                } else {
-                    $payload = [
-                        'iss' => 'http://library.org',
-                        'aud' => 'http://library.com',
-                        'iat' => $expire,
-                        'exp' => $expire + 3600,
-                        'data' => array(
-                            'userid' => $userid, 
-                            "name" => $username,
-                            "access_level" => $access_level
-                        )
-                    ];
-
-                    $new_jwt = JWT::encode($payload, $key, 'HS256');
-
-                    $sql = "UPDATE users SET token = :token  WHERE userid = :userid";
-                    $statement = $conn->prepare($sql);
-                    $statement->execute(['token' => $new_jwt, 'userid' => $userid]);
-
-                    $response->getBody()->write(
-                        json_encode(array("status" => "success", "new_token" => $new_jwt, "Message" => "No user account found."))
-                    );
-                }
-
-            } catch (PDOException $e) {
-                $response->getBody()->write(json_encode(array("status" => "fail", "data" => array("Message" => $e->getMessage()))));
-            }
-        } catch (Exception $e) {
-            $response->getBody()->write(json_encode(array("status" => "fail", "data" => array("Message" => $e->getMessage()))));
-        }
-    
-        $conn = null;
-        return $response;
-    });
-
-    //Books API
-    //Add Book (Admin)
+        //Books API
+    //Add Book (Admin) 
     $app->post("/add/books", function(Request $request, Response $response, array $args) {
         $data = json_decode($request->getBody());
     
@@ -917,7 +919,7 @@
     
             if (!isset($decoded->data->access_level) || $decoded->data->access_level !== 'admin') {
                 $response->getBody()->write(
-                    json_encode(array("status" => "fail", "data" => array("Message" => "Access Denied. Only admins can update books.")))
+                    json_encode(array("status" => "fail", "data" => array("Message" => "Access Denied, only admins can update books.")))
                 );
                 return $response;
             }
@@ -1228,7 +1230,7 @@
     
         $conn = null;
         return $response;
-    });
+    }); 
 
     //Display Books by author
     $app->get("/display/authorsbooks", function (Request $request, Response $response, array $args) {
@@ -1536,7 +1538,7 @@
         $conn = null;
         return $response;
     });
-    
+
     $app->run();
 
 ?>

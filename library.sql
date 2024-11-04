@@ -1,474 +1,257 @@
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Oct 11, 2024 at 02:41 PM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 7.4.30
+/*
+SQLyog Ultimate v13.1.1 (64 bit)
+MySQL - 10.4.32-MariaDB : Database - library
+*********************************************************************
+*/
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+/*!40101 SET NAMES utf8 */;
 
+/*!40101 SET SQL_MODE=''*/;
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`library` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 
---
--- Database: `library`
---
+USE `library`;
 
--- --------------------------------------------------------
+/*Table structure for table `authors` */
 
---
--- Table structure for table `authors`
---
+DROP TABLE IF EXISTS `authors`;
 
 CREATE TABLE `authors` (
-  `authorid` int(9) NOT NULL,
-  `authorname` char(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `authorid` int(9) NOT NULL AUTO_INCREMENT,
+  `authorname` char(255) NOT NULL,
+  PRIMARY KEY (`authorid`)
+) ENGINE=InnoDB AUTO_INCREMENT=423 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `authors`
---
+/*Data for the table `authors` */
 
-INSERT INTO `authors` (`authorid`, `authorname`) VALUES
-(1, 'James Brown'),
-(2, 'John Davis'),
-(3, 'Jessica Smith'),
-(4, 'David Miller'),
-(5, 'Laura Miller'),
-(6, 'Sarah Williams'),
-(7, 'Laura Smith'),
-(8, 'Rachel Jones'),
-(9, 'Laura Miller'),
-(10, 'Emily Jones'),
-(11, 'Matthew Smith'),
-(12, 'Michael Taylor'),
-(13, 'David Brown'),
-(14, 'Sarah Garcia'),
-(15, 'John Martinez'),
-(16, 'James Garcia'),
-(17, 'Rachel Williams'),
-(18, 'Laura Johnson'),
-(19, 'Emily Davis'),
-(20, 'Matthew Garcia'),
-(21, 'David Smith'),
-(22, 'Jessica Martinez'),
-(23, 'Michael Jones'),
-(24, 'John Williams'),
-(25, 'James Taylor'),
-(26, 'Rachel Davis'),
-(27, 'Sarah Brown'),
-(28, 'Laura Garcia'),
-(29, 'David Martinez'),
-(30, 'Jessica Williams'),
-(31, 'John Smith'),
-(32, 'Emily Brown'),
-(33, 'James Davis'),
-(34, 'Rachel Garcia'),
-(35, 'Laura Martinez'),
-(36, 'Matthew Johnson'),
-(37, 'Michael Davis'),
-(38, 'Jessica Taylor'),
-(39, 'David Williams'),
-(40, 'John Garcia'),
-(41, 'Sarah Smith'),
-(42, 'Emily Johnson'),
-(43, 'Rachel Brown'),
-(44, 'Laura Williams'),
-(45, 'David Taylor'),
-(46, 'Matthew Davis'),
-(47, 'John Brown'),
-(48, 'Jessica Johnson'),
-(49, 'Sarah Martinez'),
-(50, 'James Garcia'),
-(51, 'Emily Davis'),
-(52, 'Rachel Smith'),
-(53, 'Laura Taylor'),
-(54, 'John Davis'),
-(55, 'David Garcia'),
-(56, 'James Brown'),
-(57, 'Michael Williams'),
-(58, 'Sarah Davis'),
-(59, 'Laura Martinez'),
-(60, 'Matthew Johnson'),
-(61, 'Emily Smith'),
-(62, 'Rachel Taylor'),
-(63, 'David Brown'),
-(64, 'James Garcia'),
-(65, 'John Martinez'),
-(66, 'Sarah Williams'),
-(67, 'Jessica Davis'),
-(68, 'Laura Garcia'),
-(69, 'Michael Smith'),
-(70, 'Emily Brown'),
-(71, 'Rachel Garcia'),
-(72, 'John Taylor'),
-(73, 'James Davis'),
-(74, 'Laura Williams'),
-(75, 'Matthew Martinez'),
-(76, 'Sarah Brown'),
-(77, 'Michael Davis'),
-(78, 'Jessica Garcia'),
-(79, 'Emily Johnson'),
-(80, 'Rachel Brown'),
-(81, 'James Williams'),
-(82, 'David Smith'),
-(83, 'John Davis'),
-(84, 'Sarah Taylor'),
-(85, 'Laura Garcia'),
-(86, 'Matthew Johnson'),
-(87, 'Emily Williams'),
-(88, 'Michael Smith'),
-(89, 'David Martinez'),
-(90, 'Jessica Garcia'),
-(91, 'Sarah Brown'),
-(92, 'John Johnson'),
-(93, 'Rachel Davis'),
-(94, 'James Williams'),
-(95, 'Laura Garcia'),
-(96, 'David Brown'),
-(97, 'Sarah Johnson'),
-(98, 'Emily Taylor'),
-(99, 'Michael Davis'),
-(100, 'Rachel Williams');
+insert  into `authors`(`authorid`,`authorname`) values 
+(316,'Charlyn'),
+(317,'Charlyn Nudas'),
+(318,'Author Three'),
+(319,'Author Four'),
+(320,'Author Five'),
+(321,'cha'),
+(322,'Author 1'),
+(323,'Author 2'),
+(324,'Author 3'),
+(325,'Author 4'),
+(326,'Author 5'),
+(327,'Author 6'),
+(328,'Author 7'),
+(329,'Author 8'),
+(330,'Author 9'),
+(331,'Author 10'),
+(332,'Author 11'),
+(333,'Author 12'),
+(334,'Author 13'),
+(335,'Author 14'),
+(336,'Author 15'),
+(337,'Author 16'),
+(338,'Author 17'),
+(339,'Author 18'),
+(340,'Author 19'),
+(341,'Author 20'),
+(342,'Author 21'),
+(343,'Author 22'),
+(344,'Author 23'),
+(345,'Author 24'),
+(346,'Author 25'),
+(347,'Author 26'),
+(348,'Author 27'),
+(349,'Author 28'),
+(350,'Author 29'),
+(351,'Author 30'),
+(352,'Author 31'),
+(353,'Author 32'),
+(354,'Author 33'),
+(355,'Author 34'),
+(356,'Author 35'),
+(357,'Author 36'),
+(358,'Author 37'),
+(359,'Author 38'),
+(360,'Author 39'),
+(361,'Author 40'),
+(362,'Author 41'),
+(363,'Author 42'),
+(364,'Author 43'),
+(365,'Author 44'),
+(366,'Author 45'),
+(367,'Author 46'),
+(368,'Author 47'),
+(369,'Author 48'),
+(370,'Author 49'),
+(371,'Author 50'),
+(372,'Author 51'),
+(373,'Author 52'),
+(374,'Author 53'),
+(375,'Author 54'),
+(376,'Author 55'),
+(377,'Author 56'),
+(378,'Author 57'),
+(379,'Author 58'),
+(380,'Author 59'),
+(381,'Author 60'),
+(382,'Author 61'),
+(383,'Author 62'),
+(384,'Author 63'),
+(385,'Author 64'),
+(386,'Author 65'),
+(387,'Author 66'),
+(388,'Author 67'),
+(389,'Author 68'),
+(390,'Author 69'),
+(391,'Author 70'),
+(392,'Author 71'),
+(393,'Author 72'),
+(394,'Author 73'),
+(395,'Author 74'),
+(396,'Author 75'),
+(397,'Author 76'),
+(398,'Author 77'),
+(399,'Author 78'),
+(400,'Author 79'),
+(401,'Author 80'),
+(402,'Author 81'),
+(403,'Author 82'),
+(404,'Author 83'),
+(405,'Author 84'),
+(406,'Author 85'),
+(407,'Author 86'),
+(408,'Author 87'),
+(409,'Author 88'),
+(410,'Author 89'),
+(411,'Author 90'),
+(412,'Author 91'),
+(413,'Author 92'),
+(414,'Author 93'),
+(415,'Author 94'),
+(416,'Author 95'),
+(417,'Author 96'),
+(418,'Author 97'),
+(419,'Author 98'),
+(420,'Author 99'),
+(421,'Author 100'),
+(422,'Author One');
 
--- --------------------------------------------------------
+/*Table structure for table `books` */
 
---
--- Table structure for table `books`
---
+DROP TABLE IF EXISTS `books`;
 
 CREATE TABLE `books` (
-  `bookid` int(9) NOT NULL,
+  `bookid` int(9) NOT NULL AUTO_INCREMENT,
   `title` char(255) NOT NULL,
   `genre` char(255) NOT NULL,
   `authorid` int(9) NOT NULL,
-  `bookCode` varchar(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `bookCode` varchar(5) NOT NULL,
+  PRIMARY KEY (`bookid`),
+  KEY `authorid` (`authorid`),
+  CONSTRAINT `books_ibfk_1` FOREIGN KEY (`authorid`) REFERENCES `authors` (`authorid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `books`
---
+/*Data for the table `books` */
 
-INSERT INTO `books` (`bookid`, `title`, `genre`, `authorid`, `bookCode`) VALUES
-(1, 'Lost and Found', 'Science Fiction', 17, '206AZ'),
-(2, 'Forgotten Memories', 'Fantasy', 51, '745NG'),
-(3, 'Shadows of the Past', 'Fiction', 90, '944UU'),
-(4, 'Whispers in the Dark', 'Romance', 77, '498NF'),
-(5, 'The Last Kingdom', 'Fiction', 33, '837YO'),
-(6, 'Beyond the Stars', 'Horror', 25, '831MG'),
-(7, 'Beyond the Stars', 'Science Fiction', 69, '447WX'),
-(8, 'The Silent Ocean', 'Fiction', 57, '861IJ'),
-(9, 'The Silent Ocean', 'Fiction', 11, '231RZ'),
-(10, 'Whispers in the Dark', 'Biography', 84, '802VS'),
-(11, 'A Journey Through Time', 'Biography', 85, '730TW'),
-(12, 'The Secret Life', 'Non-Fiction', 36, '283VG'),
-(13, 'Mystery of the Night', 'Biography', 30, '279TE'),
-(14, 'The Secret Life', 'Biography', 52, '104MB'),
-(15, 'Beyond the Stars', 'Romance', 34, '558FC'),
-(16, 'The Last Kingdom', 'Mystery', 69, '594QE'),
-(17, 'Mystery of the Night', 'Horror', 27, '486WZ'),
-(18, 'The Silent Ocean', 'Fiction', 20, '815QT'),
-(19, 'Forgotten Memories', 'Fiction', 90, '273SM'),
-(20, 'Shadows of the Past', 'Romance', 66, '194UE'),
-(21, 'Whispers in the Dark', 'Science Fiction', 41, '362WY'),
-(22, 'Dreams of the Future', 'Fiction', 56, '591VR'),
-(23, 'The Secret Life', 'Biography', 32, '752OZ'),
-(24, 'Lost and Found', 'Horror', 93, '860IW'),
-(25, 'A Journey Through Time', 'Fantasy', 24, '219CV'),
-(26, 'Mystery of the Night', 'Romance', 71, '485AX'),
-(27, 'Forgotten Memories', 'Non-Fiction', 17, '604EL'),
-(28, 'The Silent Ocean', 'Fiction', 73, '972GJ'),
-(29, 'Beyond the Stars', 'Fantasy', 47, '520HW'),
-(30, 'Whispers in the Dark', 'Science Fiction', 12, '193NP'),
-(31, 'Lost and Found', 'Romance', 58, '326QR'),
-(32, 'Forgotten Memories', 'Non-Fiction', 35, '410MV'),
-(33, 'Shadows of the Past', 'Fiction', 22, '841TE'),
-(34, 'Dreams of the Future', 'Mystery', 62, '737XB'),
-(35, 'A Journey Through Time', 'Fantasy', 45, '946YH'),
-(36, 'The Silent Ocean', 'Fiction', 74, '563KF'),
-(37, 'Whispers in the Dark', 'Non-Fiction', 10, '621JD'),
-(38, 'Beyond the Stars', 'Fiction', 51, '484CU'),
-(39, 'Mystery of the Night', 'Fantasy', 67, '782DY'),
-(40, 'The Last Kingdom', 'Biography', 11, '990QU'),
-(41, 'Forgotten Memories', 'Romance', 29, '605PL'),
-(42, 'Lost and Found', 'Science Fiction', 95, '429SV'),
-(43, 'Dreams of the Future', 'Non-Fiction', 31, '348RC'),
-(44, 'Shadows of the Past', 'Fiction', 40, '179FD'),
-(45, 'The Secret Life', 'Fantasy', 70, '993OY'),
-(46, 'A Journey Through Time', 'Science Fiction', 64, '113PU'),
-(47, 'The Last Kingdom', 'Non-Fiction', 28, '602TM'),
-(48, 'Whispers in the Dark', 'Romance', 36, '450LK'),
-(49, 'Beyond the Stars', 'Horror', 21, '514NY'),
-(50, 'Shadows of the Past', 'Science Fiction', 80, '896TG'),
-(51, 'The Silent Ocean', 'Fiction', 14, '542HR'),
-(52, 'Dreams of the Future', 'Mystery', 68, '453XI'),
-(53, 'The Last Kingdom', 'Non-Fiction', 55, '931QW'),
-(54, 'A Journey Through Time', 'Romance', 26, '682ML'),
-(55, 'Forgotten Memories', 'Fantasy', 83, '490GF'),
-(56, 'The Secret Life', 'Fiction', 49, '179HY'),
-(57, 'Whispers in the Dark', 'Science Fiction', 88, '860PK'),
-(58, 'Lost and Found', 'Non-Fiction', 99, '210ER'),
-(59, 'The Last Kingdom', 'Romance', 43, '753WB'),
-(60, 'The Silent Ocean', 'Mystery', 89, '905RT'),
-(61, 'Forgotten Memories', 'Biography', 37, '304VW'),
-(62, 'Dreams of the Future', 'Non-Fiction', 63, '842DN'),
-(63, 'A Journey Through Time', 'Horror', 39, '575QA'),
-(64, 'Beyond the Stars', 'Science Fiction', 50, '492GB'),
-(65, 'Shadows of the Past', 'Fantasy', 92, '873YO'),
-(66, 'The Secret Life', 'Fiction', 34, '721AF'),
-(67, 'Dreams of the Future', 'Non-Fiction', 46, '238NL'),
-(68, 'Lost and Found', 'Horror', 53, '667WK'),
-(69, 'Mystery of the Night', 'Fantasy', 79, '173RU'),
-(70, 'Whispers in the Dark', 'Fiction', 20, '946ME'),
-(71, 'Shadows of the Past', 'Romance', 96, '522SX'),
-(72, 'The Silent Ocean', 'Mystery', 57, '411BL'),
-(73, 'Beyond the Stars', 'Science Fiction', 13, '149GV'),
-(74, 'Whispers in the Dark', 'Non-Fiction', 75, '682AD'),
-(75, 'The Last Kingdom', 'Fiction', 97, '407WP'),
-(76, 'A Journey Through Time', 'Fantasy', 66, '943PC'),
-(77, 'Forgotten Memories', 'Romance', 82, '261KS'),
-(78, 'Lost and Found', 'Horror', 48, '537TJ'),
-(79, 'Shadows of the Past', 'Science Fiction', 86, '194BQ'),
-(80, 'Beyond the Stars', 'Fiction', 33, '920XV'),
-(81, 'The Last Kingdom', 'Fantasy', 19, '670HW'),
-(82, 'Whispers in the Dark', 'Non-Fiction', 98, '103ZA'),
-(83, 'Forgotten Memories', 'Romance', 76, '429JE'),
-(84, 'Shadows of the Past', 'Biography', 15, '716QN'),
-(85, 'Dreams of the Future', 'Mystery', 59, '241XC'),
-(86, 'The Silent Ocean', 'Science Fiction', 71, '964VN'),
-(87, 'Beyond the Stars', 'Fantasy', 81, '291ZE'),
-(88, 'Lost and Found', 'Horror', 44, '572WU'),
-(89, 'Forgotten Memories', 'Romance', 61, '645DL'),
-(90, 'The Secret Life', 'Non-Fiction', 16, '827UV'),
-(91, 'Shadows of the Past', 'Fantasy', 87, '238KO'),
-(92, 'Mystery of the Night', 'Romance', 18, '614FJ'),
-(93, 'The Last Kingdom', 'Biography', 99, '347LH'),
-(94, 'A Journey Through Time', 'Horror', 60, '912BG'),
-(95, 'The Silent Ocean', 'Science Fiction', 24, '657IM'),
-(96, 'Dreams of the Future', 'Mystery', 54, '479CW'),
-(97, 'Forgotten Memories', 'Fiction', 38, '801SD'),
-(98, 'Whispers in the Dark', 'Biography', 25, '210KA'),
-(99, 'Shadows of the Past', 'Science Fiction', 72, '158TE'),
-(100, 'Lost and Found', 'Romance', 42, '397OU');
+insert  into `books`(`bookid`,`title`,`genre`,`authorid`,`bookCode`) values 
+(123,'Book Title Three','Mystery',318,'915AG'),
+(124,'Book Title Four','Science Fiction',319,'748NV'),
+(125,'Book Title Five','Fantasy',320,'704YQ'),
+(126,'Book Title One','Fiction',316,'372HG'),
+(127,'Book Title Two','Non-Fiction',317,'858RG'),
+(128,'Book Title Three','Mystery',318,'542JH'),
+(129,'Book Title Four','Science Fiction',319,'140PM'),
+(130,'Book Title Five','Fantasy',320,'634XY'),
+(131,'Book Title One','Fiction',316,'641SH'),
+(132,'Book Title Two','Non-Fiction',317,'136MG'),
+(133,'Book Title Three','Mystery',318,'476CC'),
+(134,'Book Title Four','Science Fiction',319,'676WQ'),
+(135,'Book Title Five','Fantasy',320,'596IX'),
+(136,'Book Title One','Fiction',316,'864MT'),
+(137,'Book Title Two','Non-Fiction',317,'357UL'),
+(138,'Book Title Three','Mystery',318,'378SO'),
+(139,'Book Title Four','Science Fiction',319,'613EJ'),
+(140,'Book Title Five','Fantasy',320,'334KT'),
+(141,'Book Title One','Fiction',422,'411ZT'),
+(142,'Book Title Two','Non-Fiction',317,'526CW'),
+(143,'Book Title Three','Mystery',318,'382UZ'),
+(144,'Book Title Four','Science Fiction',319,'549XB'),
+(145,'Book Title Five','Fantasy',320,'799CS'),
+(146,'Book Title One','Fiction',422,'999XD'),
+(147,'Book Title Two','Non-Fiction',317,'482WP'),
+(148,'Book Title Three','Mystery',318,'721UE'),
+(149,'Book Title Four','Science Fiction',319,'503NK'),
+(150,'Book Title Five','Fantasy',320,'944AU');
 
--- --------------------------------------------------------
+/*Table structure for table `books_collection` */
 
---
--- Table structure for table `books_collection`
---
+DROP TABLE IF EXISTS `books_collection`;
 
 CREATE TABLE `books_collection` (
-  `collectionid` int(9) NOT NULL,
+  `collectionid` int(9) NOT NULL AUTO_INCREMENT,
   `bookid` int(9) NOT NULL,
-  `authorid` int(9) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `authorid` int(9) NOT NULL,
+  PRIMARY KEY (`collectionid`),
+  KEY `bookid` (`bookid`),
+  KEY `authorid` (`authorid`),
+  CONSTRAINT `books_collection_ibfk_1` FOREIGN KEY (`bookid`) REFERENCES `books` (`bookid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `books_collection_ibfk_2` FOREIGN KEY (`authorid`) REFERENCES `authors` (`authorid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `books_collection`
---
+/*Data for the table `books_collection` */
 
-INSERT INTO `books_collection` (`collectionid`, `bookid`, `authorid`) VALUES
-(1, 1, 17),
-(2, 2, 51),
-(3, 3, 90),
-(4, 4, 77),
-(5, 5, 33),
-(6, 6, 25),
-(7, 7, 69),
-(8, 8, 57),
-(9, 9, 11),
-(10, 10, 84),
-(11, 11, 85),
-(12, 12, 36),
-(13, 13, 30),
-(14, 14, 52),
-(15, 15, 34),
-(16, 16, 69),
-(17, 17, 27),
-(18, 18, 20),
-(19, 19, 90),
-(20, 20, 66),
-(21, 21, 41),
-(22, 22, 56),
-(23, 23, 32),
-(24, 24, 93),
-(25, 25, 24),
-(26, 26, 71),
-(27, 27, 17),
-(28, 28, 73),
-(29, 29, 47),
-(30, 30, 12),
-(31, 31, 58),
-(32, 32, 35),
-(33, 33, 22),
-(34, 34, 62),
-(35, 35, 45),
-(36, 36, 74),
-(37, 37, 10),
-(38, 38, 51),
-(39, 39, 67),
-(40, 40, 11),
-(41, 41, 29),
-(42, 42, 95),
-(43, 43, 31),
-(44, 44, 40),
-(45, 45, 70),
-(46, 46, 64),
-(47, 47, 28),
-(48, 48, 36),
-(49, 49, 21),
-(50, 50, 80),
-(51, 51, 14),
-(52, 52, 68),
-(53, 53, 55),
-(54, 54, 26),
-(55, 55, 83),
-(56, 56, 49),
-(57, 57, 88),
-(58, 58, 99),
-(59, 59, 43),
-(60, 60, 89),
-(61, 61, 37),
-(62, 62, 63),
-(63, 63, 39),
-(64, 64, 50),
-(65, 65, 92),
-(66, 66, 34),
-(67, 67, 46),
-(68, 68, 53),
-(69, 69, 79),
-(70, 70, 20),
-(71, 71, 96),
-(72, 72, 57),
-(73, 73, 13),
-(74, 74, 75),
-(75, 75, 97),
-(76, 76, 66),
-(77, 77, 82),
-(78, 78, 48),
-(79, 79, 86),
-(80, 80, 33),
-(81, 81, 19),
-(82, 82, 98),
-(83, 83, 76),
-(84, 84, 15),
-(85, 85, 59),
-(86, 86, 71),
-(87, 87, 81),
-(88, 88, 44),
-(89, 89, 61),
-(90, 90, 16),
-(91, 91, 87),
-(92, 92, 18),
-(93, 93, 99),
-(94, 94, 60),
-(95, 95, 24),
-(96, 96, 54),
-(97, 97, 38),
-(98, 98, 25),
-(99, 99, 72),
-(100, 100, 42);
+insert  into `books_collection`(`collectionid`,`bookid`,`authorid`) values 
+(123,123,318),
+(124,124,319),
+(125,125,320),
+(126,126,316),
+(127,127,317),
+(128,128,318),
+(129,129,319),
+(130,130,320),
+(131,131,316),
+(132,132,317),
+(133,133,318),
+(134,134,319),
+(135,135,320),
+(136,136,316),
+(137,137,317),
+(138,138,318),
+(139,139,319),
+(140,140,320),
+(141,141,422),
+(142,142,317),
+(143,143,318),
+(144,144,319),
+(145,145,320),
+(146,146,422),
+(147,147,317),
+(148,148,318),
+(149,149,319),
+(150,150,320);
 
--- --------------------------------------------------------
+/*Table structure for table `users` */
 
---
--- Table structure for table `users`
---
+DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
-  `userid` int(9) NOT NULL,
-  `email` varchar(500) NOT NULL,
+  `userid` int(9) NOT NULL AUTO_INCREMENT,
   `username` char(255) NOT NULL,
   `password` text NOT NULL,
   `access_level` varchar(10) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `token` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `token` text NOT NULL,
+  PRIMARY KEY (`userid`)
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Indexes for dumped tables
---
+/*Data for the table `users` */
 
---
--- Indexes for table `authors`
---
-ALTER TABLE `authors`
-  ADD PRIMARY KEY (`authorid`);
+insert  into `users`(`userid`,`username`,`password`,`access_level`,`token`) values 
+(115,'admin','$2y$10$DTPgrdjEio4OfBUrKXx.QOfpTvhFSR6SOCRf.qXUGQnUeriA1CU8O','admin',''),
+(116,'joshua','$2y$10$7SrrmrjgJGnD/VxZ74t4Eum9weiG4InifJMoeu636g.lXzW15y2Be','',''),
+(117,'joshu','$2y$10$m6df.fijmT5PAZmqrquqietspU7OwQsiBvuTdUUCplirJXC5KvARq','','');
 
---
--- Indexes for table `books`
---
-ALTER TABLE `books`
-  ADD PRIMARY KEY (`bookid`),
-  ADD KEY `authorid` (`authorid`);
-
---
--- Indexes for table `books_collection`
---
-ALTER TABLE `books_collection`
-  ADD PRIMARY KEY (`collectionid`),
-  ADD KEY `bookid` (`bookid`),
-  ADD KEY `authorid` (`authorid`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`userid`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `authors`
---
-ALTER TABLE `authors`
-  MODIFY `authorid` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
-
---
--- AUTO_INCREMENT for table `books`
---
-ALTER TABLE `books`
-  MODIFY `bookid` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
-
---
--- AUTO_INCREMENT for table `books_collection`
---
-ALTER TABLE `books_collection`
-  MODIFY `collectionid` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `userid` int(9) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `books`
---
-ALTER TABLE `books`
-  ADD CONSTRAINT `books_ibfk_1` FOREIGN KEY (`authorid`) REFERENCES `authors` (`authorid`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `books_collection`
---
-ALTER TABLE `books_collection`
-  ADD CONSTRAINT `books_collection_ibfk_1` FOREIGN KEY (`bookid`) REFERENCES `books` (`bookid`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `books_collection_ibfk_2` FOREIGN KEY (`authorid`) REFERENCES `authors` (`authorid`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
